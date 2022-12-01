@@ -16,6 +16,6 @@ patches:
       name: random-shapes-svc
     patch: |-
       - op: replace
-        path: /spec/ports/nodePort
+        path: /spec/ports/0/nodePort
         value: 30338
 
