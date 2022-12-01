@@ -12,8 +12,8 @@ replicas:
     count: 3
 patches:
   - target:
-      kind: Deployment
-      name: random-shapes
+      kind: Service
+      name: random-shapes-svc
     patch: |-
       - op: replace
         path: /spec/ports/nodePort
