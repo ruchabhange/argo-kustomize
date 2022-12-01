@@ -6,14 +6,19 @@ bases:
 commonLabels:
   org: Infracloud
 
-namePrifix: prod
+namePrefix: prod-
 
-patch: |-
-        - op: replace
-          path: /spec/replicas
-          value: 3
-    
-        - op: replace
-          path: /spec/ports/nodePort
-          value: 30339
+replicas:
+  - name: random-shapes
+    count: 3
+
+#deployment
+#  patch: |-
+#      - op: replace
+#        path: /spec/replicas
+#        value: 3
+#   
+#      - op: replace
+#        path: /spec/ports/nodePort
+#        value: 30339
 
