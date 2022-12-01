@@ -10,15 +10,12 @@ namePrefix: stage-
 replicas:
   - name: random-shapes
     count: 3
-ports:
-  - name: random-shapes-svc
-    nodePort: 30338
-
-#patch: |-
-#        - op: replace
-#          path: /spec/replicas
-#          value: 2
-#        - op: replace
-#          path: /spec/ports/nodePort
-#          value: 30338
+patches:
+  - target:
+      kind: Deployment
+      name: random-shapes
+    patch: |-
+      - op: replace
+        path: /spec/ports/nodePort
+        value: 30338
 
