@@ -7,12 +7,15 @@ resources:
  - configmap.yaml
 commonLabels:
   org: Infracloud
+namePrefix: test-
+replicas:
+  - name: random-shapes
+    count: 3
 
-namePrifix: test
-patch: |- 
-        - op: replace
-          path: /spec/replicas
-          value: 1
-        - op: replace
-          path: /spec/ports/nodePort
-          value: 30337
+#patch: |- 
+#        - op: replace
+#          path: /spec/replicas
+#          value: 1
+#        - op: replace
+#          path: /spec/ports/nodePort
+#          value: 30337
