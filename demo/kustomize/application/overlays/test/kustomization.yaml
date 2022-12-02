@@ -6,8 +6,7 @@ resources:
 bases:
  - ../../base
 
-resources:
- - configmap.yaml
+
 commonLabels:
   org: Infracloud
 namePrefix: test-
