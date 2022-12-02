@@ -8,7 +8,7 @@ bases:
 
 commonLabels:
    org: Infracloud
-
+   enviornment: stage
 namePrefix: stage-
 replicas:
   - name: random-shapes
