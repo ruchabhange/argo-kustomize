@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: moving-shapes-colors
 data:
-  CIRCLE_COLOR: "green"
+  CIRCLE_COLOR: "blue"
   OVAL_COLOR: "green"
   SQUARE_COLOR: "green"
   TRIANGLE_COLOR: "green"  
