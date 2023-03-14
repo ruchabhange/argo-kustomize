@@ -2,6 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: random-shapes
+  annotations:
+    notifications.argoproj.io/subscribe.on-sync-succeeded.slack: argo-notification
 spec:
   selector:
     matchLabels:
