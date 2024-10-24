@@ -1,0 +1,62 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master    # Adjust this to your main branch (e.g., main)
+      - dev
+      - stage
+      - prod
+  pull_request:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Login to Docker Hub
+        env:
+          DOCKER_USER: ${{ secrets.DOCKER_HUB_USERNAME }}
+          DOCKER_PASS: ${{ secrets.DOCKER_HUB_PASSWORD }}
+        run: |
+          echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
+
+      - name: Set up Docker Buildx
+        run: |
+          docker buildx create --use
+
+      - name: Build and push Docker image
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          context: ./
+          file: ./Dockerfile
+          push: true
+          tags: |
+            ${{ secrets.DOCKER_HUB_USERNAME }}/php-random-shapes:${{ github.ref_name }}
+
+      - name: Update Kustomization and Deploy
+        run: |
+          case ${{ github.ref_name }} in
+            master)
+              kubectl apply -k ./prod
+              argocd app sync your-prod-app-name
+              ;;
+            dev)
+              kubectl apply -k ./dev
+              argocd app sync your-dev-app-name
+              ;;
+            stage)
+              kubectl apply -k ./stage
+              argocd app sync your-stage-app-name
+              ;;
+          esac
+
+      - name: Image digest
+        run: echo ${{ steps.docker_build.outputs.digest }}
